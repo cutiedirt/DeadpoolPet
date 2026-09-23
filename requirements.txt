@@ -1,0 +1,7 @@
+# runtime
+PySide6>=6.5
+
+# only needed to regenerate assets/sprite.png + assets/icon.png from a new
+# source image via tools/prepare_image.py
+Pillow>=10.0
+numpy>=1.24
