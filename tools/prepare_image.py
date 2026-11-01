@@ -9,11 +9,14 @@ Fixes:
 """
 
 import os
+import sys
 
 import numpy as np
 from PIL import Image, ImageFilter
 
-SRC = "/mnt/c/Users/Administrator/Downloads/生成指定元素图片.png"
+# 源图路径：用环境变量 SRC_IMAGE 或第一个命令行参数传入。
+# （原先硬编码本机绝对路径，会把 Windows 用户名带进公开仓库）
+SRC = os.environ.get("SRC_IMAGE") or (sys.argv[1] if len(sys.argv) > 1 else "")
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_SPRITE = os.path.join(ROOT, "assets", "sprite.png")
 OUT_ICON = os.path.join(ROOT, "assets", "icon.png")
@@ -23,6 +26,8 @@ FEATHER = 2.2
 
 
 def cutout():
+    if not SRC:
+        raise SystemExit("请指定源图：SRC_IMAGE 环境变量或第一个命令行参数")
     im = Image.open(SRC).convert("RGB")
     a = np.asarray(im, dtype=np.float32)
     dist = np.sqrt(((a - 255.0) ** 2).sum(axis=2))

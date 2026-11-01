@@ -15,3 +15,7 @@ dist/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# 凭据文件（防御性）
+.env
+.env.*
